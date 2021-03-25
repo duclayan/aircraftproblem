@@ -5,7 +5,7 @@
         attr_accessor :passenger
 
         def initialize (cell, passenger)
-            @cell = cell
+            @cell = []
             @passenger = passenger
             @total_column = 0
             @total_row = 0
@@ -13,8 +13,18 @@
             @add_to_record = []
         end
 
-        def arange_seat_template(location,columnSize, rowSize)
-            max_columnSize = @total_column + columnSize
+        def arange_seat_template(cell,passenger)
+            # max_columnSize = @total_column + columnSize
+
+            cell.each_with_index {|item, index| 
+                
+                puts "index: #{index}"
+                puts "item : #{item}"
+                item.each {|row, c|
+                    puts "row: #{row}"
+                    puts "Column: #{c}"
+                }
+            }
             # Records the (W)indow Seat and the (A)isle 
             # Seats are labeled as "1-A", "2-W", and "3-M" for easier sorting
             #Formulas Used: 
@@ -24,25 +34,25 @@
                     # (@total_column + 1) => @total_column + 1 give the coordinate of the first chair
                     # (@total_column + 2)  => Used to indicate the chair next to the aisle
                     # (max_columnSize - 1) => generate the last chair before the current last column
-            for row in 1 .. rowSize
-                if location == 'left'
-                    @add_to_record.push([row, 1, "2-W"], [row, columnSize, "1-A"])
-                elsif location == 'right'
-                    @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "2-W"])
-                elsif location == "middle"
-                    @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "1-A"])
-                end
-            end
-            # Check item has middle seats
-            if columnSize > 2
-                for row in 1 .. rowSize
-                    for column in (@total_column + 2) .. (max_columnSize - 1 )
-                        @add_to_record.push([row,column, "3-M"])
-                    end
-                end
-            end
-            sort_record()
-            @total_column += columnSize
+            # for row in 1 .. rowSize
+            #     if location == 'left'
+            #         @add_to_record.push([row, 1, "2-W"], [row, columnSize, "1-A"])
+            #     elsif location == 'right'
+            #         @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "2-W"])
+            #     elsif location == "middle"
+            #         @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "1-A"])
+            #     end
+            # end
+            # # Check item has middle seats
+            # if columnSize > 2
+            #     for row in 1 .. rowSize
+            #         for column in (@total_column + 2) .. (max_columnSize - 1 )
+            #             @add_to_record.push([row,column, "3-M"])
+            #         end
+            #     end
+            # end
+            # sort_record()
+            # @total_column += columnSize
         end
 
         def sort_record ()
@@ -69,45 +79,11 @@
         end
     end
 
-    # UNCOMMENT THIS SECTION FOR: Auto generated input section
-    newFlightPlan = Aircraft.new(4, 30)
-    newFlightPlan.arange_seat_template('left',3,2)
-    newFlightPlan.arange_seat_template('middle',4,3)
-    newFlightPlan.arange_seat_template('middle',2,3)
-    newFlightPlan.arange_seat_template('right',3,4)
+    newFlightPlan = Aircraft.new(4,30)
+    newFlightPlan.arange_seat_template([[3,2],[3,4],[4,5],[2,2]],30)
 
-
-    # # Uncomment this for user to be able to enter own input
-    # puts "Enter the number of columns:"
-    # cell = gets.chomp.to_i
-    # puts "Enter the number of passengers:"
-    # passenger = gets.chomp.to_i
-
-    # newFlightPlan = Aircraft.new(cell,passenger)
-
-    # # Loop to get the rows and columns per cell 
-    # for i in 1 .. cell 
-
-    #     puts "Enter Column"
-    #     colSize = gets.chomp.to_i
-    #     puts "Enter Row"
-    #     rowSize = gets.chomp.to_i
-
-
-    #     if i == 1
-    #         location = 'left'
-    #     elsif i == cell
-    #         location = 'right'
-    #     else
-    #         location = 'middle'
-    #     end
-    #     newFlightPlan.arange_seat_template(location,colSize, rowSize)
-    # end
-
-    # # Do not comment out the next two lines
-
-    newFlightPlan.allocate_passenger_seat()
-    newFlightPlan.show_results()  
+    # newFlightPlan.allocate_passenger_seat()
+    # newFlightPlan.show_results()  
     
 
 
