@@ -16,14 +16,15 @@
         def arange_seat_template(cell,passenger)
             # max_columnSize = @total_column + columnSize
 
-            cell.each_with_index {|item, index| 
+            cell.each_with_index {|row,column,index| 
                 
                 puts "index: #{index}"
-                puts "item : #{item}"
-                item.each {|row, c|
-                    puts "row: #{row}"
-                    puts "Column: #{c}"
-                }
+                puts "row: #{row}"
+                puts "column: #{column}"
+                # item.each {|row, c|
+                #     puts "row: #{row}"
+                #     puts "Column: #{c}"
+                # }
             }
             # Records the (W)indow Seat and the (A)isle 
             # Seats are labeled as "1-A", "2-W", and "3-M" for easier sorting
