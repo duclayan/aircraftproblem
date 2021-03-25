@@ -1,16 +1,20 @@
 require 'minitest/autorun'
 require_relative 'aircraftproblem'
 
-describe 'aircraftproblem' do
+describe "Aircraft" do
+    
     before do
-        @ac = get_seat_label(1, 0, 0, 0,'left_corner',0,3,4)
-        @cell = 4
-        @window_seat = 0
-        
+        @flight = Aircraft.new(:cell => 4,:passenger =>30)
     end
 
+    # it "" do
+    #     assert_operator @flight.add_to_record.must_be_instance_of Array
+    # end
+
     it "should not allow an input < 0" do 
-        assert_operator @ac.cell.value, :>=, 1
+        assert_operator @flight.cell, :>=, 1
     end
+
+    
 
 end
