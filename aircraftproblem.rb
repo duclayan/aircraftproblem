@@ -1,12 +1,10 @@
 # Aircraft.new( cell : 3, passenger: 30, add_to_record: [])
     #cell.new(rows: 4, column: 5)
     class Aircraft
-        attr_accessor :cell 
-        attr_accessor :passenger
 
-        def initialize (cell, passenger)
-            @cell = []
-            @passenger = passenger
+        def initialize ()
+            # @cell = []
+            # @passenger = passenger
             @total_column = 0
             @total_row = 0
             @passenger_seat = []
@@ -52,7 +50,7 @@
                 @total_column += columnSize
             end
             self.allocate_passenger_seat(passenger)
-            puts "Passenger: #{passenger}"
+            return @passenger_seat
         end
 
         def sort_record ()
@@ -81,9 +79,10 @@
         end
     end
 
-    newFlightPlan = Aircraft.new(4,30)
-    newFlightPlan.arange_seat_template([[3,2],[3,4],[4,5],[2,2]],30)
-    newFlightPlan.show_passenger()
+    newFlightPlan = Aircraft.new()
+    seats = newFlightPlan.arange_seat_template([[3,2],[3,4],[4,5],[2,2]],30)
+    # newFlightPlan.allocate_passenger_seat()
+    puts "Seats = #{seats}"
 
 
     
