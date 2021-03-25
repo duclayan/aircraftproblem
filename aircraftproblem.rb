@@ -17,36 +17,36 @@ class Aircraft
     def arange_seat_template(cell,passenger)
         index = 0
 
-        cell.each do |rowSize, columnSize| 
+        cell.each do |rowSize, column_size| 
 
             index += 1
-            max_columnSize = @total_column + columnSize
+            max_column_size = @total_column + column_size
 
             # Records the (W)indow Seat and the (A)isle 
             for row in 1 .. rowSize
                 if index == 0
                     #Left Side : Window and Aisle
-                    @add_to_record.push([row, 1, "2-W"], [row, columnSize, "1-A"])
+                    @add_to_record.push([row, 1, "2-W"], [row, column_size, "1-A"])
                 elsif index == (cell.length - 1) 
                     #Right Side : Window and Aisle
-                    @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "2-W"])
+                    @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_column_size, "2-W"])
                 else
                     #Middle Seats : Aisle
-                    @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "1-A"])
+                    @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_column_size, "1-A"])
                 end
             end
 
             # This is the algorithm to get the middle Seats
-            if columnSize > 2
+            if column_size > 2
                 for row in 1 .. rowSize
-                    for column in (@total_column + 2) .. (max_columnSize - 1 )
+                    for column in (@total_column + 2) .. (max_column_size - 1 )
                         @add_to_record.push([row,column, "3-M"])
                     end
                 end
             end
 
             sort_record()
-            @total_column += columnSize
+            @total_column += column_size
         end
 
         #gives each passenger a seat
