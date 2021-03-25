@@ -6,7 +6,7 @@
 # Seat Labels : [1-A] Aisle Seat, [2-W] Window Seat, [3-M] Middle Seat
 
 class Aircraft
-
+    attr_accessor :passenger
     def initialize ()
         @total_column = 0
         @total_row = 0
@@ -17,13 +17,11 @@ class Aircraft
     def arange_seat_template(cell,passenger)
         index = 0
 
-        cell.each do |rowSize, column_size| 
-
-            index += 1
+        cell.each do |column_size, row_size| 
             max_column_size = @total_column + column_size
 
             # Records the (W)indow Seat and the (A)isle 
-            for row in 1 .. rowSize
+            for row in 1 .. row_size
                 if index == 0
                     #Left Side : Window and Aisle
                     @add_to_record.push([row, 1, "2-W"], [row, column_size, "1-A"])
@@ -38,7 +36,7 @@ class Aircraft
 
             # This is the algorithm to get the middle Seats
             if column_size > 2
-                for row in 1 .. rowSize
+                for row in 1 .. row_size
                     for column in (@total_column + 2) .. (max_column_size - 1 )
                         @add_to_record.push([row,column, "3-M"])
                     end
@@ -47,6 +45,7 @@ class Aircraft
 
             sort_record()
             @total_column += column_size
+            index = index + 1
         end
 
         #gives each passenger a seat
@@ -70,8 +69,5 @@ class Aircraft
 end
 
 newFlightPlan = Aircraft.new()
-seats = newFlightPlan.arange_seat_template([[3,2],[3,4],[4,5],[2,2]], 30)
+seats = newFlightPlan.arange_seat_template([[3,2], [4,3], [2,3], [3,4]], 30)
 puts "Seats = #{seats}"
-
-
-    
