@@ -14,46 +14,44 @@
         end
 
         def arange_seat_template(cell,passenger)
-            # max_columnSize = @total_column + columnSize
-
-            cell.each_with_index {|row,column,index| 
-                
+            index = 0
+            cell.each do |rowSize,columnSize| 
                 puts "index: #{index}"
-                puts "row: #{row}"
-                puts "column: #{column}"
-                # item.each {|row, c|
-                #     puts "row: #{row}"
-                #     puts "Column: #{c}"
-                # }
-            }
-            # Records the (W)indow Seat and the (A)isle 
-            # Seats are labeled as "1-A", "2-W", and "3-M" for easier sorting
-            #Formulas Used: 
-                    # 1 => C = 1 assumes first coordinate is always a window chair
-                    # columnSize=> takes the last column coordinate as an aisle chair
-                    # max_columnSize =>assumes that max_columnSize is the current last column
-                    # (@total_column + 1) => @total_column + 1 give the coordinate of the first chair
-                    # (@total_column + 2)  => Used to indicate the chair next to the aisle
-                    # (max_columnSize - 1) => generate the last chair before the current last column
-            # for row in 1 .. rowSize
-            #     if location == 'left'
-            #         @add_to_record.push([row, 1, "2-W"], [row, columnSize, "1-A"])
-            #     elsif location == 'right'
-            #         @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "2-W"])
-            #     elsif location == "middle"
-            #         @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "1-A"])
-            #     end
-            # end
-            # # Check item has middle seats
-            # if columnSize > 2
-            #     for row in 1 .. rowSize
-            #         for column in (@total_column + 2) .. (max_columnSize - 1 )
-            #             @add_to_record.push([row,column, "3-M"])
-            #         end
-            #     end
-            # end
-            # sort_record()
-            # @total_column += columnSize
+                puts "row: #{rowSize}"
+                puts "column: #{columnSize}"
+                index += 1
+                max_columnSize = @total_column + columnSize
+
+                # Records the (W)indow Seat and the (A)isle 
+                # Seats are labeled as "1-A", "2-W", and "3-M" for easier sorting
+                #Formulas Used: 
+                        # 1 => C = 1 assumes first coordinate is always a window chair
+                        # columnSize=> takes the last column coordinate as an aisle chair
+                        # max_columnSize =>assumes that max_columnSize is the current last column
+                        # (@total_column + 1) => @total_column + 1 give the coordinate of the first chair
+                        # (@total_column + 2)  => Used to indicate the chair next to the aisle
+                        # (max_columnSize - 1) => generate the last chair before the current last column
+                for row in 1 .. rowSize
+                    if index == 0
+                        @add_to_record.push([row, 1, "2-W"], [row, columnSize, "1-A"])
+                    elsif index == (cell.length - 1)
+                        @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "2-W"])
+                    else
+                        @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_columnSize, "1-A"])
+                    end
+                end
+                # Check item has middle seats
+                if columnSize > 2
+                    for row in 1 .. rowSize
+                        for column in (@total_column + 2) .. (max_columnSize - 1 )
+                            @add_to_record.push([row,column, "3-M"])
+                        end
+                    end
+                end
+                sort_record()
+                @total_column += columnSize
+            end
+            allocate_passenger_seat(passenger)
         end
 
         def sort_record ()
@@ -64,8 +62,8 @@
 
         end
 
-        def allocate_passenger_seat
-            for i in 0 .. (@passenger - 1)
+        def allocate_passenger_seat(passenger_count)
+            for i in 0 .. (passenger_count - 1)
                 @passenger_seat[i] = @add_to_record[i]
             end
         end
@@ -82,11 +80,8 @@
 
     newFlightPlan = Aircraft.new(4,30)
     newFlightPlan.arange_seat_template([[3,2],[3,4],[4,5],[2,2]],30)
-
     # newFlightPlan.allocate_passenger_seat()
-    # newFlightPlan.show_results()  
-    
-
+    newFlightPlan.show_passenger()
 
 
     
