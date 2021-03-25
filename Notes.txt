@@ -1,0 +1,7 @@
+                #Formulas Used: 
+                        # 1 => C = 1 assumes first coordinate is always a window chair
+                        # columnSize=> takes the last column coordinate as an aisle chair
+                        # max_columnSize =>assumes that max_columnSize is the current last column
+                        # (@total_column + 1) => @total_column + 1 give the coordinate of the first chair
+                        # (@total_column + 2)  => Used to indicate the chair next to the aisle
+                        # (max_columnSize - 1) => generate the last chair before the current last column
