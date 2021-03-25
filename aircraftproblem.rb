@@ -51,7 +51,8 @@
                 sort_record()
                 @total_column += columnSize
             end
-            allocate_passenger_seat(passenger)
+            self.allocate_passenger_seat(passenger)
+            puts "Passenger: #{passenger}"
         end
 
         def sort_record ()
@@ -66,6 +67,8 @@
             for i in 0 .. (passenger_count - 1)
                 @passenger_seat[i] = @add_to_record[i]
             end
+
+            puts "Passenger : #{@passenger_seat}"
         end
 
         def show_results
@@ -80,7 +83,6 @@
 
     newFlightPlan = Aircraft.new(4,30)
     newFlightPlan.arange_seat_template([[3,2],[3,4],[4,5],[2,2]],30)
-    # newFlightPlan.allocate_passenger_seat()
     newFlightPlan.show_passenger()
 
 

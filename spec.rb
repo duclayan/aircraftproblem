@@ -23,6 +23,9 @@ describe "Aircraft" do
 
     it "should be an array" do
         newFlightPlan = Aircraft.new(4, 30)
+        Aircraft.new([[3,2],[3,4],[4,5],[2,2]], 30).arrange_seat
+        input = [[3,2],[3,4],[4,5],[2,2]]
+
         newFlightPlan.arange_seat_template('left',3,2)
         newFlightPlan.arange_seat_template('middle',4,3)
         newFlightPlan.arange_seat_template('middle',2,3)
