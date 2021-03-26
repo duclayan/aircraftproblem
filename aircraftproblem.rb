@@ -2,24 +2,21 @@
 #total_row => tracks and update number of rows
 #passenger_seat => stores the seat location of each passenger
 #add_to_record => stores all the available seat
-
 # Seat Labels : [1-A] Aisle Seat, [2-W] Window Seat, [3-M] Middle Seat
-
 class Aircraft
-    attr_accessor :passenger
-    def initialize ()
+    attr_accessor :passenger, :cell
+    def initialize (cell,passenger)
         @total_column = 0
         @total_row = 0
         @passenger_seat = []
         @add_to_record = []
+        @cell = cell
+        @passenger = passenger
     end
-
-    def arange_seat_template(cell,passenger)
+    def arange_seat_template
         index = 0
-
         cell.each do |column_size, row_size| 
             max_column_size = @total_column + column_size
-
             # Records the (W)indow Seat and the (A)isle 
             for row in 1 .. row_size
                 if index == 0
@@ -33,7 +30,6 @@ class Aircraft
                     @add_to_record.push([row, (@total_column + 1), "1-A"], [row, max_column_size, "1-A"])
                 end
             end
-
             # This is the algorithm to get the middle Seats
             if column_size > 2
                 for row in 1 .. row_size
@@ -42,32 +38,26 @@ class Aircraft
                     end
                 end
             end
-
             sort_record()
             @total_column += column_size
             index = index + 1
         end
-
         #gives each passenger a seat
-        self.allocate_passenger_seat(passenger)
+        allocate_passenger_seat(passenger)
         return @passenger_seat
     end
-
-    def sort_record ()
+    def sort_record
         # 1. Sort record by row
         # 2. then sort it according to the seat label
         @add_to_record = @add_to_record.sort_by{|row,column,location| [row]}
         @add_to_record = @add_to_record.sort_by{|row,column,location| [location.chars.first.chomp.to_i]}
     end
-
     def allocate_passenger_seat(passenger_count)
         for i in 0 .. (passenger_count - 1)
             @passenger_seat.push(@add_to_record[i])
         end
     end
-
 end
-
-newFlightPlan = Aircraft.new()
-seats = newFlightPlan.arange_seat_template([[3,2], [4,3], [2,3], [3,4]], 30)
+newFlightPlan = Aircraft.new([[3,2], [4,3], [2,3], [3,4]], 30)
+seats = newFlightPlan.arange_seat_template
 puts "Seats = #{seats}"
